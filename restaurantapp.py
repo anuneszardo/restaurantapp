@@ -15,13 +15,17 @@ import httplib2  # noqa: E402
 import json  # noqa: E402
 from flask import make_response  # noqa: E402
 import requests  # noqa: E402
+import os
 
 app = Flask(__name__)
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATABASE_PATH = os.path.join(BASE_DIR, 'db/restaurantmenuwithusers.db')
 
 # Necessary for single thread pool for connection
 # Creates a engine that ignore the currrent thread
 # to connect within the database
-engine = create_engine('sqlite:///restaurantmenuwithusers.db',
+engine = create_engine('sqlite:///' + DATABASE_PATH,
                        connect_args={'check_same_thread': False})
 Base.metadata.bind = engine
 
